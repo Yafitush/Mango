@@ -30,8 +30,7 @@ import json
 
 __author__ = 'Yafit'
 
-ip = 'http://52.16.65.135:8080'
-#ip = 'http://212.29.254.24:8080'
+ip= xxxxxxxx
 
 
 username = 'admin'
