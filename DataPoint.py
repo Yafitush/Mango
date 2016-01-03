@@ -7,7 +7,7 @@ class DataPoint:
                  overrideIntervalLoggingSamples="false", intervalLoggingSampleWindowSize=0, cacheSize=1, loggingperiods=15,
                  loggingtype="MINUTES", readPermission="", setPermission="", dataSourceName="", chartColour= "", plotType="",
                  purgeOverride="false", dataSourceXid="", pointFolderId=0, unit="", useIntegralUnit="", integralUnit="", useRenderedUnit="",
-                 renderedUnit="", deviceName="", name="", xid="",setPointLocator={}):
+                 renderedUnit="", deviceName="", name="", xid="", id=0 ,setPointLocator={}):
         self.enabled = enabled
         self.templateXid = templateXid
         self.modelType = modelType
@@ -53,6 +53,7 @@ class DataPoint:
         self.useRenderedUnit = useRenderedUnit
         self.renderedUnit = renderedUnit
         self.dataSourceName = dataSourceName
-        self.id = 0
+        self.id = id
         self.xid = xid
         self.name = name
+
