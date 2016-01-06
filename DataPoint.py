@@ -28,7 +28,7 @@ class DataPoint:
         self.loggingProperties = {'tolerance': tolerance,
                                   'discardExtremeValues':discardExtremeValues,
                                   'discardLowLimit': discardLowLimit,
-                                  'discardHighLimit':discardHighLimit,
+                                  'discardHighLimit': discardHighLimit,
                                   'loggingType': loggingType,
                                   'intervalLoggingType': intervalLoggingType,
                                   'overrideIntervalLoggingSamples': overrideIntervalLoggingSamples,
