@@ -10,7 +10,7 @@ __author__ = 'Yafit'
 ''' There are different types of data points and for each type there is a different Point_Locator! '''
 
 
-def point_locator(type, *args):
+def point_locator(type, **kwrgs):
     """
     The function gets the data point type and call the right function
     :param type:
@@ -20,13 +20,13 @@ def point_locator(type, *args):
     common.print_frame()
     ans = {}
     if type == "SQL":
-        ans = setPointLocator_Sql(*args)
+        ans = setPointLocator_Sql(**kwrgs)
     if type == "HttpRetriever":
-        ans = setPointLocator_HttpRetriever(*args)
+        ans = setPointLocator_HttpRetriever(**kwrgs)
     if type == "Modbus":
-        ans = setPointLocator_Modbus(*args)
+        ans = setPointLocator_Modbus(**kwrgs)
     if type == "BacnetIp":
-        ans = setPointLocator_BacnetIp(*args)
+        ans = setPointLocator_BacnetIp(**kwrgs)
     return ans
 
 
@@ -89,7 +89,7 @@ def setPointLocator_HttpRetriever(dataType="BINARY", settable="false", modelType
             }
 
 
-def setPointLocator_Sql(dataType="BINARY", settable="false", relinquishable="false", modelType="PL.SQL",
+def setPointLocator_Sql(dataType="ALPHANUMERIC", settable="false", relinquishable="false", modelType="PL.SQL",
                         fieldName="", timeOverrideName="", updateStatement="", tableModifier="false",
                         parameters=[], dateParameterFormat="yyyy-MM-dd'T'HH:mm:ss"):
     common.print_frame()
@@ -227,7 +227,7 @@ def insertUpdateDataPoint(ip, reqCookie, myDataPoint):
                 "modelType": myDataPoint.modelType,
                 "validationMessages": [],
                 "dataSourceId": myDataPoint.dataSourceId,
-                "deviceName": myDataPoint.dataSourceName,
+                "deviceName": myDataPoint.deviceName,
                 "chartColour": myDataPoint.chartColour,
                 "plotType": myDataPoint.plotType,
                 "purgeOverride": myDataPoint.purgeOverride,
@@ -248,7 +248,7 @@ def insertUpdateDataPoint(ip, reqCookie, myDataPoint):
                 "id": '0',
                 "xid": myDataPoint.xid,
                 "name": myDataPoint.name}]
-
+    print payload
     parameters_json = json.dumps(payload)
     myHeader = {'Accept': 'application/json',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN'],

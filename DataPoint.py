@@ -1,13 +1,13 @@
 class DataPoint:
-    def __init__(self, enabled="true", templateXid="Binary_Default", modelType= "DATA_POINT",
+    def __init__(self, enabled="true", templateXid="null", modelType= "DATA_POINT",
                  dataSourceId="", purgeperiods=1, purgePeriodType="YEARS", zeroLabel="zero", zeroColour="blue", oneLabel="one",
                  oneColour="black", textRenderertype="textRendererBinary", chartRendererlimit=10, chartRendererType="chartRendererTable",
-                 tolerance=0, discardExtremeValues="false", discardLowLimit=-1.7976931348623157e+308,
-                 discardHighLimit=1.7976931348623157e+308, loggingType="ON_CHANGE", intervalLoggingType="INSTANT",
+                 tolerance=0, discardExtremeValues="false", discardLowLimit=-0,
+                 discardHighLimit=0, loggingType="ON_CHANGE", intervalLoggingType="INSTANT",
                  overrideIntervalLoggingSamples="false", intervalLoggingSampleWindowSize=0, cacheSize=1, loggingperiods=15,
                  loggingtype="MINUTES", readPermission="", setPermission="", dataSourceName="", chartColour= "", plotType="",
-                 purgeOverride="false", dataSourceXid="", pointFolderId=0, unit="", useIntegralUnit="", integralUnit="", useRenderedUnit="",
-                 renderedUnit="", deviceName="", name="", xid="", id=0 ,setPointLocator={}):
+                 purgeOverride="false", dataSourceXid="", pointFolderId=0, unit="C", useIntegralUnit="", integralUnit="", useRenderedUnit="",
+                 renderedUnit="C", deviceName="", name="", xid="", id=0 ,setPointLocator={}):
         self.enabled = enabled
         self.templateXid = templateXid
         self.modelType = modelType
