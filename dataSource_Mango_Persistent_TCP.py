@@ -2,9 +2,9 @@ __author__ = 'Yafit'
 
 
 class DataSource_MANGO_PERSISTENT_TCP:
-    def __init__(self, xid="", name="", enabled="false", purgeType="YEARS", editPermission="superadmin",
+    def __init__(self, xid="", name="", enabled="true", purgeType="YEARS", editPermission="superadmin",
                  purgeOverride="false", purgePeriod=1, logLevel="LOG_LEVEL_NONE", acceptPointUpdates="true",
-                 authorizationKey="", port=55, saveRealtimeData="true", socketTimeout=5000, useCompression="true",
+                 authorizationKey="abra_cadabra", port=55, saveRealtimeData="true", socketTimeout=5000, useCompression="true",
                  useCrc="true"):
          self.xid = xid
          self.name = name
@@ -22,4 +22,4 @@ class DataSource_MANGO_PERSISTENT_TCP:
          self.saveRealtimeData = saveRealtimeData
          self.socketTimeout = socketTimeout
          self.useCompression = useCompression
-         self.useCrc=useCrc
+         self.useCrc = useCrc

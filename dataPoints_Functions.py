@@ -115,7 +115,7 @@ def dataPoints(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/data-points', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-points', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -256,7 +256,7 @@ def insertUpdateDataPoint(ip, reqCookie, myDataPoint):
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Connection': 'keep-alive'}
     try:
-        r = requests.put(ip + '/rest/v1/data-points', data=parameters_json, headers=myHeader, cookies=reqCookie)
+        r = requests.put('http://' + ip + ':8080' + '/rest/v1/data-points', data=parameters_json, headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "The data point was added/ saved!"
         else:
@@ -278,7 +278,7 @@ def insertUpdateDataPoint_json(ip, reqCookie, json_data):
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Connection': 'keep-alive'}
-    r = requests.put(ip + '/rest/v1/data-points', data=json.dumps([json_data]), headers=myHeader, cookies=reqCookie)
+    r = requests.put('http://' + ip + ':8080' + '/rest/v1/data-points', data=json.dumps([json_data]), headers=myHeader, cookies=reqCookie)
     print r.status_code
 
 
@@ -293,7 +293,7 @@ def dataPointById(ip, reqCookie, pointId):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/data-points/by-id/' + str(pointId), headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-points/by-id/' + str(pointId), headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -318,7 +318,7 @@ def dataPointsForDataSourceByXid(ip, reqCookie, xid):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/data-points/data-source/' + str(xid), headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-points/data-source/' + str(xid), headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -342,7 +342,7 @@ def dataPointListWithLimit(ip, reqCookie, limit=100):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/data-points/list?limit=' + str(limit), headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-points/list?limit=' + str(limit), headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -367,7 +367,7 @@ def deleteDataPointByXid(ip, reqCookie, xid):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.delete(ip + '/rest/v1/data-points/' + str(xid), headers=myHeader, cookies=reqCookie)
+        r = requests.delete('http://' + ip + ':8080' + '/rest/v1/data-points/' + str(xid), headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "The data point was deleted!"
         else:
@@ -393,7 +393,7 @@ def getDataPointByXid(ip, reqCookie, xid):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/data-points/' + str(xid), headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-points/' + str(xid), headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -406,8 +406,9 @@ def getDataPointByXid(ip, reqCookie, xid):
         print "Exiting program!"
         sys.exit(1)
 
-def detPointsXidBelongsToDataSource(ip, reqCookie, d_xid):
-    ''' The function gets dataSource xid and returns a list of all it's dataPoints xids. '''
+
+def getPointsXidBelongsToDataSource(ip, reqCookie, d_xid):
+    'The function gets dataSource xid and returns a list of all it\'s dataPoints xids.'
     common.print_frame()
     dp = dataPointsForDataSourceByXid(ip, reqCookie, d_xid)
     jds = json.loads(dp)
@@ -417,15 +418,21 @@ def detPointsXidBelongsToDataSource(ip, reqCookie, d_xid):
     return xids_list
 
 
+def getDataPointsXidFromJson(json_data):
+    'The function gets a json file and returns a list of data points xids.'
+    common.print_frame()
+    jds = json.loads(json_data)
+    xids_list = []
+    print(jds['total'])
+    for row in jds['items']:
+        xids_list.append(row['xid'])
+    return xids_list
 
-'''
-def newInstanceOfDataPoint(dp):
-    jdp = json.loads(dp)
-    dataPoint_type = jdp['pointLocator']['modelType']
-    if dataPoint_type == "PL.BACNET_IP":
-        jdp['pointLocator']['useCovSubscription'] = "false"
-    return jdp['pointLocator']
-'''
+
+
+
+
+
 
 
 

@@ -16,18 +16,14 @@ def dataSources(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/data-sources/list', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-sources/list', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
             print "error occurred"
             print "Reason: status code " + str(r.status_code)
-            print "Exiting program!"
-            sys.exit(1)
     except requests.exceptions.RequestException as e:
         print "Error: " + str(e)
-        print "Exiting program!"
-        sys.exit(1)
 
 
 def getDataSourceByXid(ip, reqCookie, xid):
@@ -42,7 +38,7 @@ def getDataSourceByXid(ip, reqCookie, xid):
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
 
     try:
-        r = requests.get(ip + '/rest/v1/data-sources/' + str(xid), headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/data-sources/' + str(xid), headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -54,6 +50,34 @@ def getDataSourceByXid(ip, reqCookie, xid):
         print "Error: " + str(e)
         print "Exiting program!"
         sys.exit(1)
+
+
+def checkIfDataSourceExists(ip, reqCookie, source_name):
+    all_dataSources = dataSources(ip, reqCookie)
+    jds = json.loads(all_dataSources)
+    check_if_data_source_exists = "false"
+    for source in jds:
+        if source['name'] == source_name:
+            check_if_data_source_exists = "true"
+    return check_if_data_source_exists
+
+
+def getDataSourceByName(ip, reqCookie, source_name):
+    """
+    The function gets a dataSource name and returns information about it.
+    :param ip:
+    :param reqCookie:
+    :param source_name:
+    :return:
+    """
+    if checkIfDataSourceExists(ip, reqCookie, source_name):
+        all_dataSources = dataSources(ip, reqCookie)
+        jds = json.loads(all_dataSources)
+        for source in jds:
+            if source['name'] == source_name:
+                return source
+    else:
+        print "data source " + source_name + " doesn't exist!"
 
 
 def addDataSourceToDataSourceFile(myDataSource):
@@ -107,7 +131,7 @@ def addDataSourceToDataSourceFile(myDataSource):
                          'editPermission': myDataSource.editPermission,
                          'purgeOverride': myDataSource.purgeOverride,
                          'purgePeriod': myDataSource.purgePeriod,
-                         'ogLevel': myDataSource.logLevel,
+                         'logLevel': myDataSource.logLevel,
                          'acceptPointUpdates': myDataSource.acceptPointUpdates,
                          'authorizationKey': myDataSource.authorizationKey,
                          'port': myDataSource.port,
@@ -231,7 +255,7 @@ def craeteDataSourceFile():
     common.print_frame()
     with open('dataSource.txt', 'w') as f:
         f.write("{\n")
-        f.write('"dataSource ":[\n')
+        f.write('"dataSources":[\n')
 
 
 def closeDataSourceFile():
@@ -290,8 +314,6 @@ def getDataSourcesXidsByType(ip, reqCookie, dataSourceType):
         return
     xidsList = []
     ds = dataSources(ip, reqCookie)
-    print "111"
-    print ds
     jds = json.loads(ds)
     for source in jds:
         if source['modelType'] == ds_type:

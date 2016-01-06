@@ -103,7 +103,7 @@ def craetePublishersFile():
     common.print_frame()
     with open('publishers.txt', 'w') as f:
         f.write("{\n")
-        f.write('"publishers ":[\n')
+        f.write('"publishers":[\n')
 
 
 def closePublishersFile():
@@ -123,7 +123,7 @@ def closePublishersFile():
         f.close()
         newdata = file_data.replace('"false"', "false")
         newdata2 = newdata.replace('"true"', "true")
-        f = open('dataSource.txt', 'w')
-        f.write(newdata2)
-        f.close()
+        f2 = open('publishers.txt', 'w')
+        f2.write(newdata2)
+        f2.close()
 

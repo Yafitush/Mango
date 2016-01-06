@@ -16,7 +16,7 @@ def getDataPointAccessListByXid(ip, reqCookie, xid):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/access/data-point/' + xid, headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/access/data-point/' + xid, headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -41,7 +41,7 @@ def getDataSourceAccessListByXid(ip, reqCookie, xid):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/access/data-source/' + xid, headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/access/data-source/' + xid, headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:

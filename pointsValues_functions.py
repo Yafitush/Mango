@@ -24,9 +24,9 @@ def getPointValuesHistoryByTimeRange(ip, reqCookie, xid, fromDate, endDate, roll
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
         r = requests.get(
-            ip + '/rest/v1/point-values/' + xid + '?useRendered=true&unitConversion=true&from=' + newFromDate +
-            '&to=' + newEndDate + '&rollup=' + rollup + '&timePeriodType=' + timePeriodType, headers=myHeader,
-            cookies=reqCookie)
+            'http://' + ip + ':8080' + '/rest/v1/point-values/' + xid + '?useRendered=true&unitConversion=true&from='
+             + newFromDate + '&to=' + newEndDate + '&rollup=' + rollup + '&timePeriodType=' + timePeriodType,
+            headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -59,8 +59,8 @@ def CountPointvaluesInTimeRange(ip, reqCookie, xid, fromDate, endDate, rollup, t
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/point-values/' + xid + '/count?from=' + newFromDate + '&to=' + newEndDate +
-                         '&rollup=' + rollup + '&timePeriodType=' + timePeriodType, headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/point-values/' + xid + '/count?from=' + newFromDate +
+                         '&to=' + newEndDate + '&rollup=' + rollup + '&timePeriodType=' + timePeriodType, headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -92,8 +92,9 @@ def getFirstAndLastPointValuesInTimeRange(ip, reqCookie, xid, fromDate, endDate)
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
         r = requests.get(
-            ip + '/rest/v1/point-values/' + xid + '/first-last?useRendered=false&unitConversion=false&from=' + newFromDate +
-            '&to=' + newEndDate, headers=myHeader, cookies=reqCookie)
+            'http://' + ip + ':8080' + '/rest/v1/point-values/' + xid +
+            '/first-last?useRendered=false&unitConversion=false&from=' + newFromDate + '&to=' + newEndDate,
+            headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -120,9 +121,9 @@ def getLatestPointValues(ip, reqCookie, xid, limit):
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
         r = requests.get(
-            ip + '/rest/v1/point-values/' + xid + '/latest?useRendered=false&unitConversion=false&limit=' + str(
-                limit) + '&useCache=true',
-            headers=myHeader, cookies=reqCookie)
+            'http://' + ip + ':8080' + '/rest/v1/point-values/' + xid +
+            '/latest?useRendered=false&unitConversion=false&limit=' + str(limit) + '&useCache=true', headers=myHeader,
+            cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -153,9 +154,9 @@ def getPointStatistics(ip, reqCookie, xid, fromDate, endDate):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/point-values/' + xid + '/statistics?useRendered=false&unitConversion=false'
-                                                               '&from=' + newFromDate + '&to=' + newEndDate,
-                         headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/point-values/' + xid +
+                         '/statistics?useRendered=false&unitConversion=false'
+                         '&from=' + newFromDate + '&to=' + newEndDate, headers=myHeader, cookies=reqCookie)
 
         if r.status_code == 200 or r.status_code == 201:
             return r.content

@@ -16,7 +16,7 @@ def userComments(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/comments', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/comments', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -59,7 +59,7 @@ def createNewComment(ip, reqCookie, comment, commentType="POINT", level="INFORMA
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Connection': 'keep-alive'}
     try:
-        r = requests.post(ip + '/rest/v1/comments', headers=myHeader, data=parameters_json, cookies=reqCookie)
+        r = requests.post('http://' + ip + ':8080' + '/rest/v1/comments', headers=myHeader, data=parameters_json, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "The comment was saved!"
         else:
@@ -83,7 +83,7 @@ def getCommentsExplainQuery(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/comments/explain-query', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/comments/explain-query', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -108,7 +108,7 @@ def getAllUserComments(ip, reqCookie, limit):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/comments/list?limit=' + str(limit), headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/comments/list?limit=' + str(limit), headers=myHeader, cookies=reqCookie)
 
         if r.status_code == 200 or r.status_code == 201:
             return r.content

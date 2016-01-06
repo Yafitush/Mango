@@ -2,9 +2,10 @@ __author__ = 'Yafit'
 
 
 class DataSource_SQL:
-     def __init__(self, xid, name="", username="", password="", enable='false', purgeType="YEARS",
+     def __init__(self, xid, name="", username="", password="", enable='true', purgeType="YEARS",
                   updatePeriodType="MINUTES", editPermission="superadmin", purgeOverride='false', purgePeriod=1,
-                  updatePeriods=5, connectionUrl="someConnectionURL" , driverClassname="className", rowBasedQuery='false', selectStatement=""):
+                  updatePeriods=5, connectionUrl="someConnectionURL" , driverClassname="className", rowBasedQuery='true',
+                  selectStatement=""):
         self.xid = xid
         self.name = name
         self.username = username

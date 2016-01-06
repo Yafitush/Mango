@@ -15,7 +15,7 @@ def getThreads(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/threads?stackDepth=10&asFile=false', headers=myHeader, cookies=reqCookie,)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/threads?stackDepth=10&asFile=false', headers=myHeader, cookies=reqCookie,)
         print r.status_code
         if r.status_code == 200 or r.status_code == 201:
             return r.content

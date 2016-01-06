@@ -38,7 +38,7 @@ def newUser(ip, reqCookie, myuser):
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Connection': 'keep-alive'}
     try:
-        r = requests.post(ip + '/rest/v1/users', headers=myHeader, data=parameters_json, cookies=reqCookie)
+        r = requests.post('http://' + ip + ':8080' + '/rest/v1/users', headers=myHeader, data=parameters_json, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "New user was added!"
         else:
@@ -62,7 +62,7 @@ def usersApi(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -86,7 +86,7 @@ def currentUser(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users/current', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users/current', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -110,7 +110,7 @@ def usersList(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users/list', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users/list', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -134,7 +134,7 @@ def getNewUser(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users/new/user', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users/new/user', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -158,7 +158,7 @@ def usersPremissions(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users/permissions', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users/permissions', headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             return r.content
         else:
@@ -182,7 +182,7 @@ def usersPremissionsGroups(ip, reqCookie):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users/permissions-groups', headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users/permissions-groups', headers=myHeader, cookies=reqCookie)
         print r.status_code
         if r.status_code == 200 or r.status_code == 201:
             return r.content
@@ -208,7 +208,7 @@ def deleteUser(ip, reqCookie, userName):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.delete(ip + '/rest/v1/users/' + userName, headers=myHeader, cookies=reqCookie)
+        r = requests.delete('http://' + ip + ':8080' + '/rest/v1/users/' + userName, headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "The user was deleted from Mango!"
         else:
@@ -233,7 +233,7 @@ def getUserByName(ip, reqCookie, userName):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.get(ip + '/rest/v1/users/' + userName, headers=myHeader, cookies=reqCookie)
+        r = requests.get('http://' + ip + ':8080' + '/rest/v1/users/' + userName, headers=myHeader, cookies=reqCookie)
         print r.status_code
         if r.status_code == 200 or r.status_code == 201:
             return r.content
@@ -283,7 +283,7 @@ def setUser(ip, reqCookie, oldName, myUser):
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Connection': 'keep-alive'}
     try:
-        r = requests.put(ip + '/rest/v1/users/' + oldName, headers=myHeader, data=parameters_json,
+        r = requests.put('http://' + ip + ':8080' + '/rest/v1/users/' + oldName, headers=myHeader, data=parameters_json,
                          cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "The user was updated!"
@@ -310,7 +310,7 @@ def setUserHomePage(ip, reqCookie, myUser, newUrl):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.put(ip + '/rest/v1/users/' + myUser.username + '/homepage?url=' + newUrl, headers=myHeader,
+        r = requests.put('http://' + ip + ':8080' + '/rest/v1/users/' + myUser.username + '/homepage?url=' + newUrl, headers=myHeader,
                          cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "The user home page was set!"
@@ -337,7 +337,7 @@ def setUserMuteSettings(ip, reqCookie, userName, mute):
     myHeader = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'X-XSRF-TOKEN': reqCookie['XSRF-TOKEN']}
     try:
-        r = requests.put(ip + '/rest/v1/users/' + userName + '/mute?mute=' + mute, headers=myHeader, cookies=reqCookie)
+        r = requests.put('http://' + ip + ':8080' + '/rest/v1/users/' + userName + '/mute?mute=' + mute, headers=myHeader, cookies=reqCookie)
         if r.status_code == 200 or r.status_code == 201:
             print "User's audio mute setting was set!"
         else:
