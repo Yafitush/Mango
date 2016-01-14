@@ -29,12 +29,12 @@ import json
 
 __author__ = 'Yafit'
 
-#ip = 'http://52.16.65.135:8080'
-ip = '212.29.254.24'
+#ip = 'xxxxxx'
+ip = 'xxxx'
 
 
-username = 'admin'
-password = 'admin'
+username = 'xxxxx'
+password = 'xxxxxx'
 myCookie = loginLogout_Functions.login(ip, username, password)  # must login before doing anything else!!!
 print myCookie
 
