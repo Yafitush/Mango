@@ -1,6 +1,7 @@
 import dataPoints_Functions
 import common
 import json
+import os
 __author__ = 'Yafit'
 
 
@@ -41,6 +42,8 @@ def publisherSetBACnetPoint(ip, reqCookie, points):
 
 def addPublisher(myPublisher):
     common.print_frame()
+    if not os.path.exists("publishers.txt"):
+     craetePublishersFile()
     add_publisher = {}
     publisher_type = myPublisher.type
     if publisher_type == "PERSISTENT":
@@ -93,7 +96,8 @@ def addPublisher(myPublisher):
 
     with open('publishers.txt', 'ab+') as f:
         json.dump(add_publisher, f)
-        f.write(',\n')
+    closePublishersFile()
+
 
 def craetePublishersFile():
     """
@@ -111,10 +115,7 @@ def closePublishersFile():
     The function close the file and add some needed text.
     """
     common.print_frame()
-    with open('publishers.txt', 'rb+') as f:
-        f.seek(0, 2)  # end of file
-        size = f.tell()  # the size...
-        f.truncate(size - 2)
+    with open('publishers.txt', 'ab+') as f:
         f.write("]}")
 
         # this part is needed to parse boolean strings to boolean ex. "false" -> false

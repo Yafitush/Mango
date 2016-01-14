@@ -16,7 +16,7 @@ def login(ip_add, user_name, password):
     myHeader = {'Accept': 'application/json',
                 'password': password}
     try:
-        r = requests.get(ip_add + '/rest/v1/login/' + user_name, headers=myHeader)
+        r = requests.get('http://' + ip_add + ':8080' + '/rest/v1/login/' + user_name, headers=myHeader)
         if r.status_code == 200 or r.status_code == 201:
             print "Successfully login"
             setCookie = r.headers['Set-Cookie']

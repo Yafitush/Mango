@@ -1,32 +1,20 @@
 class DataPoint:
-    def __init__(self, enabled="true", templateXid="null", modelType= "DATA_POINT",
-                 dataSourceId="", purgeperiods=1, purgePeriodType="YEARS", zeroLabel="zero", zeroColour="blue", oneLabel="one",
-                 oneColour="black", textRenderertype="textRendererBinary", chartRendererlimit=10, chartRendererType="chartRendererTable",
-                 tolerance=0, discardExtremeValues="false", discardLowLimit=-0,
-                 discardHighLimit=0, loggingType="ON_CHANGE", intervalLoggingType="INSTANT",
-                 overrideIntervalLoggingSamples="false", intervalLoggingSampleWindowSize=0, cacheSize=1, loggingperiods=15,
-                 loggingtype="MINUTES", readPermission="", setPermission="", dataSourceName="", chartColour= "", plotType="",
-                 purgeOverride="false", dataSourceXid="", pointFolderId=0, unit="C", useIntegralUnit="", integralUnit="", useRenderedUnit="",
-                 renderedUnit="C", deviceName="", name="", xid="", id=0 ,setPointLocator={}):
+    def __init__(self, published="true", enabled="true", modelType= "DATA_POINT",
+                 purgeperiods=1, purgePeriodType="YEARS", tolerance=0, discardExtremeValues="false",
+                 discardLowLimit=1.7976931348623157e+308,discardHighLimit=-1.7976931348623157e+308, loggingType="INTERVAL",
+                 intervalLoggingType="INSTANT", overrideIntervalLoggingSamples="false", intervalLoggingSampleWindowSize=10,
+                 cacheSize=1, loggingperiods=2, loggingtype="MINUTES", readPermission=" ", setPermission=" ",
+                 dataSourceName="", chartColour= "", plotType="STEP",purgeOverride="false", dataSourceXid="",
+                 pointFolderId=0, unit="C", useIntegralUnit="false", integralUnit="",useRenderedUnit="false",
+                 renderedUnit="C", deviceName="", name="", xid="", setPointLocator={}):
         self.enabled = enabled
-        self.templateXid = templateXid
         self.modelType = modelType
-        self.dataSourceId = dataSourceId
-
         self. purgePeriod = {'periods': purgeperiods,
                              'type': purgePeriodType
                              }
-        self.textRenderer = {'zeroLabel': zeroLabel,
-                             'zeroColour': zeroColour,
-                             'oneLabel': oneLabel,
-                             'oneColour': oneColour,
-                             'type': textRenderertype
-                             }
-        self.chartRenderer = {'limit': chartRendererlimit,
-                              'type': chartRendererType
-                              }
+        self.textRenderer = setPointLocator['textRenderer']
         self.loggingProperties = {'tolerance': tolerance,
-                                  'discardExtremeValues':discardExtremeValues,
+                                  'discardExtremeValues': discardExtremeValues,
                                   'discardLowLimit': discardLowLimit,
                                   'discardHighLimit': discardHighLimit,
                                   'loggingType': loggingType,
@@ -38,7 +26,7 @@ class DataPoint:
                                                             'type': loggingtype
                                                             }
                                   }
-        self.pointLocator = setPointLocator
+        self.pointLocator = setPointLocator['pointLocator']
         self.readPermission = readPermission
         self.setPermission = setPermission
         self.deviceName = deviceName
@@ -53,7 +41,6 @@ class DataPoint:
         self.useRenderedUnit = useRenderedUnit
         self.renderedUnit = renderedUnit
         self.dataSourceName = dataSourceName
-        self.id = id
         self.xid = xid
         self.name = name
-
+        self.published = published

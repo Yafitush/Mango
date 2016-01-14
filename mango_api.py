@@ -23,15 +23,14 @@ import user
 import userAccess_Functions
 import userComments_Functions
 import users_Functions
-import IMS
-import pyhaystack
+
 import loginLogout_Functions
 import json
 
 __author__ = 'Yafit'
 
-ip = 'http://52.16.65.135:8080'
-#ip = 'http://212.29.254.24:8080'
+#ip = 'http://52.16.65.135:8080'
+ip = '212.29.254.24'
 
 
 username = 'admin'
@@ -39,26 +38,21 @@ password = 'admin'
 myCookie = loginLogout_Functions.login(ip, username, password)  # must login before doing anything else!!!
 print myCookie
 
-'''
-bacnetXIDS = dataSources_Functions.getDataSourcesXidsByType(ip, myCookie,"BACNET_ip")
+
+bacnetXIDS = dataSources_Functions.getDataSourcesXidsByType(ip, myCookie, "BACNET_ip")
 datapointsXIDS = []
 for datasource in bacnetXIDS:
-    a = dataPoints_Functions.detPointsXidBelongsToDataSource(ip,myCookie,datasource)
+    a = dataPoints_Functions.getPointsXidBelongsToDataSource(ip, myCookie, datasource)
     datapointsXIDS.extend(a)
-print datapointsXIDS
-'''
+for dataPoint in datapointsXIDS:
+    dp = dataPoints_Functions.getDataPointByXid(ip, myCookie, dataPoint)
+    jdp = json.loads(dp)
+    dataPoint_type = jdp['pointLocator']['modelType']
+    if dataPoint_type == "PL.BACNET_IP":
+        jdp['pointLocator']['useCovSubscription'] = "false"
+        dataPoints_Functions.insertUpdateDataPoint_json(ip, myCookie, jdp)
 
 
-
-datapoint = "DP_123"
-dp = dataPoints_Functions.getDataPointByXid(ip, myCookie, datapoint)
-jdp = json.loads(dp)
-dataPoint_type = jdp['pointLocator']['modelType']
-if dataPoint_type == "PL.BACNET_IP":
-    jdp['pointLocator']['useCovSubscription'] = "false"
-    jdp['textRenderer']['bla'] = "zero"
-    print dp
-    dataPoints_Functions.insertUpdateDataPoint_json(ip, myCookie, jdp)
 
 
 
@@ -70,7 +64,7 @@ if dataPoint_type == "PL.BACNET_IP":
 dataSourceXID = getXid(ip, parsedCookie,  "CoolExpertBacnet")
 dataSourceXID_RDM = getXid(ip, parsedCookie,  "RDM_DS")
 
-dataPointsOfdataSourceXID = detPointsForPublisher(ip, parsedCookie, dataSourceXID)
+dataPointsOfdataSourceXID = getPointsForPublisher(ip, parsedCookie, dataSourceXID)
 dataPointsOfdataSourceXID_RDM = detPointsForPublisher(ip, parsedCookie, dataSourceXID_RDM)
 
 dataPointsOfdataSourceXID.extend(dataPointsOfdataSourceXID_RDM)
@@ -104,6 +98,7 @@ myDataPoint = DataPoint.DataPoint("true", "Binary_Default", "DATA_POINT", '12', 
 mySQLds = dataSource_sql.DataSource_SQL("DS_1212121", "pythonSQLds121212", "bar", "bar123", "false", "YEARS", "MINUTES",
                                         "user",
                                         'false', 1, 5, "url", "someClassName", 'false', "")
+
 myBacknetIPds = dataSource_Bacnet_Ip.DataSource_BACNET_IP("ds_bb", "pythonBckIp", "true", "YEARS", "MINUTES",
                                                           "superadmin", "false", 1, 5, 60)
 

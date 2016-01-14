@@ -2,6 +2,7 @@ import requests
 import sys
 import common
 import json
+import os
 __author__ = 'Yafit'
 
 
@@ -53,6 +54,7 @@ def getDataSourceByXid(ip, reqCookie, xid):
 
 
 def checkIfDataSourceExists(ip, reqCookie, source_name):
+    common.print_frame()
     all_dataSources = dataSources(ip, reqCookie)
     jds = json.loads(all_dataSources)
     check_if_data_source_exists = "false"
@@ -86,6 +88,8 @@ def addDataSourceToDataSourceFile(myDataSource):
     :param myDataSource:
     """
     common.print_frame()
+    if not os.path.exists('dataSource.txt'):
+        craeteDataSourceFile()
     dataSourceType = myDataSource.type
     addDataSource = {}
     if dataSourceType == "BACnetIP":
@@ -172,6 +176,8 @@ def addDataSourceToDataSourceFile(myDataSource):
                          }
     if dataSourceType == "SQL":
         addDataSource = {'xid': myDataSource.xid,
+                         'username': myDataSource.username,
+                         'password': myDataSource.password,
                          'name': myDataSource.name,
                          'enabled': myDataSource.enabled.replace('"', ''),
                          'type': "SQL",
@@ -243,8 +249,8 @@ def addDataSourceToDataSourceFile(myDataSource):
                          }
 
     with open('dataSource.txt', 'ab+') as f:
-        json.dump(addDataSource, f)
-        f.write(',\n')
+        json.dump(addDataSource, f, indent=0)
+    closeDataSourceFile()
 
 
 def craeteDataSourceFile():
@@ -263,10 +269,7 @@ def closeDataSourceFile():
     The function close the file and add some needed text.
     """
     common.print_frame()
-    with open('dataSource.txt', 'rb+') as f:
-        f.seek(0, 2)  # end of file
-        size = f.tell()  # the size...
-        f.truncate(size - 2)
+    with open('dataSource.txt', 'ab+') as f:
         f.write("]}")
 
         # this part is needed to parse boolean strings to boolean ex. "false" -> false
@@ -281,9 +284,9 @@ def closeDataSourceFile():
 
 
 def getDataSourceXid(ip, reqCookie, dataSourceName):
-    '''
+    """
     The function gets a data source name and returns it's xid
-    '''
+    """
     common.print_frame()
     ds = dataSources(ip, reqCookie)
     jds = json.loads(ds)
@@ -291,6 +294,7 @@ def getDataSourceXid(ip, reqCookie, dataSourceName):
         if source['name'] == dataSourceName:
             return source['xid']
     return 'Data source not found.'
+
 
 def getDataSourcesXidsByType(ip, reqCookie, dataSourceType):
     '''  The function gets a dataSource type and returns the xids of all data sources of the same type.'''
